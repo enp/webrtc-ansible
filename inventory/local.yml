@@ -1,0 +1,5 @@
+all:
+  vars:
+    user: app
+  hosts:
+    10.0.1.10:

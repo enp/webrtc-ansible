@@ -1,0 +1,43 @@
+---
+- hosts: all
+  remote_user: "{{ user }}"
+  become: yes 
+  become_user: root
+  become_method: sudo
+  tasks:
+
+    - name: pre-install packages
+      yum:
+        name:
+          - epel-release
+          - https://files.freeswitch.org/repo/yum/centos-release/freeswitch-release-repo-0-1.noarch.rpm
+        state: present
+
+    - name: install packages
+      yum:
+        name:
+          - rsync
+          - wireshark
+          - freeswitch
+          - nginx
+        state: present
+
+    - name: remove all configuration sub-directories
+      shell: rm -rf /etc/freeswitch/*
+      args: 
+        warn: no
+
+    - name: copy all files
+      synchronize: src=files/ dest=/ recursive=yes
+
+    - name: configure IP addresses
+      replace: path={{ item }} regexp=<<IP_ADDRESS>> replace={{ inventory_hostname }}
+      with_items:
+        - /etc/freeswitch/freeswitch.xml
+        - /etc/nginx/nginx.conf
+
+    - name: restart and enable daemons
+      systemd: name={{ item }} state=restarted enabled=yes masked=no
+      with_items:
+        - freeswitch
+        - nginx

@@ -1,0 +1,1 @@
+run ansible-playbook -i inventory/local.yml webrtc.yml and open https://10.0.1.10/webrtc/sipjs.html

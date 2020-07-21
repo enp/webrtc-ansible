@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>WebRTC Example</title>
+</head>
+
+<body>
+    <script type="text/javascript" src='sipjs.js'></script>
+    <script type="text/javascript">
+    </script>
+</body>
+
+<body>
+    <audio id="remoteAudio"></audio>
+    <script type="text/javascript" src='sipjs.js'></script>
+    <script type="text/javascript">
+        const simple = new SIP.Web.Simple({
+            media: {
+                remote: {
+                    audio: remoteAudio
+                }
+            },
+            ua: {
+                uri: '101@local',
+                wsServers: [`${location.protocol.replace('http', 'ws')}//${location.host}/webrtc/socket`], // for FF/Chrome both
+                //wsServers: [`${location.protocol.replace('http', 'ws')}//${location.host}:5081`], // for Chrome only
+                authorizationUser: '101',
+                password: '101'
+            }
+        })
+        simple.on('registered', () => {
+            simple.call('101@local')
+        })        
+    </script>
+</body>
+
+
+</html> 
