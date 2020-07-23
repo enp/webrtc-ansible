@@ -69,6 +69,8 @@
         <param name="dialplan" value="XML"/>
         <param name="sip-ip" value="<<IP_ADDRESS>>"/>
         <param name="rtp-ip" value="<<IP_ADDRESS>>"/>
+        <param name="rtp-timer-name" value="soft"/>
+        <param name="inbound-late-negotiation" value="true"/>
         <param name="ws-binding" value=":5071"/>
         <param name="wss-binding" value=":5081"/>
         <param name="tls" value="true"/>
@@ -77,6 +79,7 @@
         <param name="codec-prefs" value="PCMA"/>
         <param name="codec-negotiation" value="greedy"/>
         <param name="log-auth-failures" value="true"/>
+        <param name="auth-calls" value="true"/>
       </settings>
     </profile>
   </profiles>
